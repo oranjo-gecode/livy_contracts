@@ -1,3 +1,51 @@
+# Livy Contracts - Monorepo for Smart Contracts
+
+**Livy Contracts** is an open-source repository designed to maintain all of our smart contracts across various use cases. This project is actively maintained as a **monorepo** and built using **Foundry** for compiling, testing, and deploying Solidity smart contracts. The repository serves as the foundation for multiple decentralized applications and blockchain projects, leveraging Solidity native unit testing for robust and scalable contract development.
+
+## 🚀 Project Overview
+
+Livy Contracts provides a unified workspace for smart contract development with reusable modules, ensuring that all contracts are kept in a single repository. While the long-term vision involves multiple projects and use cases, this repository currently focuses on validating off-chain purchase events via **Chainlink external adapters** before minting a **POAP (Proof of Attendance Protocol)**, ensuring trust and verification of user actions before blockchain interaction.
+
+This project is part of an active **Hackathon**, where we aim to deliver secure and scalable smart contract solutions with the community's feedback and contributions.
+
+## ✨ Key Features
+
+- **Monorepo Architecture**: Centralized repository for multiple smart contracts, reducing duplication and improving code reuse.
+- **Solidity Native Unit Testing**: All contracts are rigorously tested using Foundry's built-in testing suite.
+- **Chainlink Integration**: Seamless interaction with Chainlink oracles for off-chain data validation before minting on-chain assets like POAPs.
+- **POAP Minting**: Implements secure logic for POAP token distribution after off-chain validation.
+- **Open Source Principles**: Actively maintained with full transparency and community involvement.
+
+## 💡 Use Case Example: Chainlink-Powered POAP Validation
+
+One of the primary use cases within this repository is a **POAP minting system** that leverages a proxy contract to perform off-chain validation via Chainlink before minting a POAP token on-chain.
+
+### Flow:
+1. A user initiates a transaction (e.g., an event participation or purchase).
+2. The proxy smart contract interacts with a Chainlink oracle to validate the transaction off-chain.
+3. After validation, the smart contract mints a POAP token on the Ethereum blockchain for the user.
+
+This approach ensures that only valid users (i.e., those who meet certain off-chain criteria) are able to mint POAPs, providing transparency and trust to both users and event organizers.
+
+## 📦 Project Structure
+
+The repository is structured as a monorepo using **Foundry**. Each contract resides in its own directory, and shared modules are placed under a common directory for reuse.
+
+```bash
+livy_contracts/
+│
+├── src/                   # Source code for all smart contracts
+│   ├── POAPValidation.sol  # Proxy contract for POAP validation using Chainlink
+│   └── ...                 # More contracts to be added
+│
+├── lib/                    # Foundry libraries (e.g., Chainlink, OpenZeppelin)
+│
+├── test/                   # Solidity unit tests for each contract
+│   ├── POAPValidation.t.sol
+│   └── ...                 # More tests to be added
+│
+└── README.md               # Project documentation
+
 ## Foundry
 
 **Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
