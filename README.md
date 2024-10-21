@@ -46,6 +46,38 @@ livy_contracts/
 │
 └── README.md               # Project documentation
 
+## 👥 Contributing
+
+We encourage the community to contribute to this project! Whether it’s fixing bugs, proposing new features, or improving documentation, your input is valuable. Follow these steps to get started:
+
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature/my-feature`).
+3. Make your changes and commit them (`git commit -am 'Add new feature'`).
+4. Push the branch (`git push origin feature/my-feature`).
+5. Open a Pull Request.
+
+## 📄 License
+
+This project is licensed under the **MIT License**.
+
+## 🏆 Hackathon Goals
+
+As part of this Hackathon, we aim to:
+
+- Deliver a complete and secure POAP validation system using Chainlink oracles.
+- Showcase the modular design of our smart contracts, enabling future expansion.
+- Foster community engagement through contributions and open feedback.
+
+Stay tuned for more updates as we continue to develop this repository during the Hackathon!
+
+## 🙌 Acknowledgments
+
+- **Chainlink** for enabling secure off-chain data validation.
+- **Foundry** for providing a robust framework for Solidity development.
+- **The OpenZeppelin team** for their libraries that power secure smart contracts.
+
+If you have any questions or suggestions, feel free to open an issue or contact us directly. We look forward to your contributions!
+
 ## Foundry
 
 **Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
