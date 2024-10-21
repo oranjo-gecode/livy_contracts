@@ -45,6 +45,7 @@ livy_contracts/
 │   └── ...                 # More tests to be added
 │
 └── README.md               # Project documentation
+```
 
 ## 👥 Contributing
 
