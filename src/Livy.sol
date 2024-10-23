@@ -1,34 +1,41 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@chainlink/contracts/v0.8/ChainlinkClient.sol";
+import "@openzeppelin/contracts/utils/Pausable.sol";
+import "@openzeppelin/contracts/access/AccessControl.sol";
 
 interface ILivyStampMintable is IERC721 {
     function mint(address to, uint256 tokenId) external;
 }
 
-contract Livy is ChainlinkClient, Ownable {
+contract Livy is ChainlinkClient, Pausable, AccessControl {
     using Chainlink for Chainlink.Request;
+    bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
+    bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
     ILivyStampMintable public poapContract;
     address public oracle;
     bytes32 public jobId;
     uint256 public fee;
-    uint64 private s_subscriptionId;
 
     mapping(bytes32 => address) public requestIdToUser;
 
     event MintingFailed(address user, uint256 tokenId, string reason);
 
     constructor(
-        address _owner,
+        address _defaultAdmin,
+        address _pauser,
+        address _minter,
         address _oracle,
         address _poapContract,
         address _link,
         bytes32 _jobId,
         uint256 _fee
-    ) ChainlinkClient() Ownable(_owner) {
+    ) ChainlinkClient() {
+        _grantRole(DEFAULT_ADMIN_ROLE, _defaultAdmin);
+        _grantRole(PAUSER_ROLE, _pauser);
+        _grantRole(MINTER_ROLE, _minter);
         _setChainlinkToken(_link);
         _setChainlinkOracle(_oracle);
         poapContract = ILivyStampMintable(_poapContract);
@@ -37,10 +44,18 @@ contract Livy is ChainlinkClient, Ownable {
         fee = _fee;
     }
 
+    function pause() public onlyRole(PAUSER_ROLE) {
+        _pause();
+    }
+
+    function unpause() public onlyRole(PAUSER_ROLE) {
+        _unpause();
+    }
+
     function requestValidation(
         string memory transactionId,
         address user
-    ) public onlyOwner returns (bytes32) {
+    ) public onlyRole(MINTER_ROLE) returns (bytes32) {
         Chainlink.Request memory req = _buildChainlinkRequest(
             jobId,
             address(this),
