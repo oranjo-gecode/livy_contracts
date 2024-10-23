@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import "./Livy.sol";
+import "./LivyStamp.sol";
 
 contract LivyFactory {
     // Keep track of all deployed collections
@@ -15,7 +15,7 @@ contract LivyFactory {
         string memory symbol
     ) public {
         // Create a new instance of the Livy contract
-        Livy newCollection = new Livy(
+        LivyStamp newCollection = new LivyStamp(
             name,
             symbol,
             msg.sender,
