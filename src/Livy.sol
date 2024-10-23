@@ -14,7 +14,7 @@ contract Livy is ChainlinkClient, Pausable, AccessControl {
     using Chainlink for Chainlink.Request;
     bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
-    ILivyStampMintable public poapContract;
+    ILivyStampMintable public stampContract;
     address public oracle;
     bytes32 public jobId;
     uint256 public fee;
@@ -28,7 +28,7 @@ contract Livy is ChainlinkClient, Pausable, AccessControl {
         address _pauser,
         address _minter,
         address _oracle,
-        address _poapContract,
+        address _stampContract,
         address _link,
         bytes32 _jobId,
         uint256 _fee
@@ -38,7 +38,7 @@ contract Livy is ChainlinkClient, Pausable, AccessControl {
         _grantRole(MINTER_ROLE, _minter);
         _setChainlinkToken(_link);
         _setChainlinkOracle(_oracle);
-        poapContract = ILivyStampMintable(_poapContract);
+        stampContract = ILivyStampMintable(_stampContract);
         oracle = _oracle;
         jobId = _jobId;
         fee = _fee;
@@ -76,7 +76,7 @@ contract Livy is ChainlinkClient, Pausable, AccessControl {
 
         if (validationSuccess == 1) {
             uint256 tokenId = _generateTokenId(user);
-            try poapContract.mint(user, tokenId) {
+            try stampContract.mint(user, tokenId) {
                 // Minting successful
             } catch Error(string memory reason) {
                 // Log the error or handle it appropriately

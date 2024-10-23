@@ -9,8 +9,8 @@ contract LivyFactory {
 
     event CollectionCreated(address collectionAddress, address owner);
 
-    // Function to create a new POAP collection
-    function createPOAPCollection(
+    // Function to create a new Livy Stamp collection
+    function createLivyStampCollection(
         string memory name,
         string memory symbol
     ) public {
