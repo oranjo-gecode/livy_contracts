@@ -4,7 +4,7 @@
 
 ## 🚀 Project Overview
 
-Livy Contracts provides a unified workspace for smart contract development with reusable modules, ensuring that all contracts are kept in a single repository. While the long-term vision involves multiple projects and use cases, this repository currently focuses on validating off-chain purchase events via **Chainlink external adapters** before minting a **POAP (Proof of Attendance Protocol)**, ensuring trust and verification of user actions before blockchain interaction.
+Livy Contracts provides a unified workspace for smart contract development with reusable modules, ensuring that all contracts are kept in a single repository. While the long-term vision involves multiple projects and use cases, this repository currently focuses on validating off-chain purchase events via **Chainlink external adapters** before minting a **Stamp (Proof of Attendance)**, ensuring trust and verification of user actions before blockchain interaction.
 
 This project is part of an active **Hackathon**, where we aim to deliver secure and scalable smart contract solutions with the community's feedback and contributions.
 
@@ -12,20 +12,21 @@ This project is part of an active **Hackathon**, where we aim to deliver secure 
 
 - **Monorepo Architecture**: Centralized repository for multiple smart contracts, reducing duplication and improving code reuse.
 - **Solidity Native Unit Testing**: All contracts are rigorously tested using Foundry's built-in testing suite.
-- **Chainlink Integration**: Seamless interaction with Chainlink oracles for off-chain data validation before minting on-chain assets like POAPs.
-- **POAP Minting**: Implements secure logic for POAP token distribution after off-chain validation.
+- **Chainlink Integration**: Seamless interaction with Chainlink oracles for off-chain data validation before minting on-chain assets like Stamps.
+- **Stamp Minting**: Implements secure logic for Stamp token distribution after off-chain validation.
 - **Open Source Principles**: Actively maintained with full transparency and community involvement.
 
-## 💡 Use Case Example: Chainlink-Powered POAP Validation
+## 💡 Use Case Example: Chainlink-Powered Stamp Validation
 
-One of the primary use cases within this repository is a **POAP minting system** that leverages a proxy contract to perform off-chain validation via Chainlink before minting a POAP token on-chain.
+One of the primary use cases within this repository is a **Stamp minting system** that leverages a proxy contract to perform off-chain validation via Chainlink before minting a Stamp token on-chain.
 
 ### Flow:
+
 1. A user initiates a transaction (e.g., an event participation or purchase).
 2. The proxy smart contract interacts with a Chainlink oracle to validate the transaction off-chain.
-3. After validation, the smart contract mints a POAP token on the Ethereum blockchain for the user.
+3. After validation, the smart contract mints a Stamp token on the Ethereum blockchain for the user.
 
-This approach ensures that only valid users (i.e., those who meet certain off-chain criteria) are able to mint POAPs, providing transparency and trust to both users and event organizers.
+This approach ensures that only valid users (i.e., those who meet certain off-chain criteria) are able to mint Stamps, providing transparency and trust to both users and event organizers.
 
 ## 📦 Project Structure
 
@@ -35,13 +36,13 @@ The repository is structured as a monorepo using **Foundry**. Each contract resi
 livy_contracts/
 │
 ├── src/                   # Source code for all smart contracts
-│   ├── POAPValidation.sol  # Proxy contract for POAP validation using Chainlink
+│   ├── Livy.sol  # Proxy contract for NFT validation using Chainlink
 │   └── ...                 # More contracts to be added
 │
 ├── lib/                    # Foundry libraries (e.g., Chainlink, OpenZeppelin)
 │
 ├── test/                   # Solidity unit tests for each contract
-│   ├── POAPValidation.t.sol
+│   ├── Livy.t.sol
 │   └── ...                 # More tests to be added
 │
 └── README.md               # Project documentation
@@ -65,7 +66,7 @@ This project is licensed under the **MIT License**.
 
 As part of this Hackathon, we aim to:
 
-- Deliver a complete and secure POAP validation system using Chainlink oracles.
+- Deliver a complete and secure NFT validation system using Chainlink oracles.
 - Showcase the modular design of our smart contracts, enabling future expansion.
 - Foster community engagement through contributions and open feedback.
 
@@ -85,10 +86,10 @@ If you have any questions or suggestions, feel free to open an issue or contact 
 
 Foundry consists of:
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+- **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
+- **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
+- **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
+- **Chisel**: Fast, utilitarian, and verbose solidity REPL.
 
 ## Documentation
 
