@@ -18,12 +18,14 @@ contract LivyStamp is
     bytes32 public constant PAUSER_ROLE = keccak256("PAUSER_ROLE");
     bytes32 public constant MINTER_ROLE = keccak256("MINTER_ROLE");
     uint256 private _nextTokenId;
+    string public defaultTokenURI;
 
     event TokenMinted(address to, uint256 tokenId);
 
     constructor(
         string memory name,
         string memory symbol,
+        string memory _defaultTokenURI,
         address defaultAdmin,
         address pauser,
         address minter
@@ -31,6 +33,8 @@ contract LivyStamp is
         _grantRole(DEFAULT_ADMIN_ROLE, defaultAdmin);
         _grantRole(PAUSER_ROLE, pauser);
         _grantRole(MINTER_ROLE, minter);
+
+        defaultTokenURI = _defaultTokenURI;
     }
 
     function pause() public onlyRole(PAUSER_ROLE) {
@@ -41,13 +45,10 @@ contract LivyStamp is
         _unpause();
     }
 
-    function safeMint(
-        address to,
-        string memory uri
-    ) public onlyRole(MINTER_ROLE) {
+    function safeMint(address to) public onlyRole(MINTER_ROLE) {
         uint256 tokenId = _nextTokenId++;
         _safeMint(to, tokenId);
-        _setTokenURI(tokenId, uri);
+        _setTokenURI(tokenId, defaultTokenURI);
     }
 
     // The following functions are overrides required by Solidity.

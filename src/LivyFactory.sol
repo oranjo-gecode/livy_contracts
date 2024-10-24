@@ -12,12 +12,14 @@ contract LivyFactory {
     // Function to create a new Livy Stamp collection
     function createLivyStampCollection(
         string memory name,
-        string memory symbol
+        string memory symbol,
+        string memory defaultTokenURI
     ) public {
         // Create a new instance of the Livy contract
         LivyStamp newCollection = new LivyStamp(
             name,
             symbol,
+            defaultTokenURI,
             msg.sender,
             msg.sender,
             msg.sender

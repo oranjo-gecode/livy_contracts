@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/utils/Pausable.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
 
 interface ILivyStampMintable is IERC721 {
-    function mint(address to, uint256 tokenId) external;
+    function safeMint(address to) external;
 }
 
 contract Livy is ChainlinkClient, Pausable, AccessControl {
@@ -21,7 +21,7 @@ contract Livy is ChainlinkClient, Pausable, AccessControl {
 
     mapping(bytes32 => address) public requestIdToUser;
 
-    event MintingFailed(address user, uint256 tokenId, string reason);
+    event MintingFailed(address user, string reason);
 
     constructor(
         address _defaultAdmin,
@@ -75,21 +75,19 @@ contract Livy is ChainlinkClient, Pausable, AccessControl {
         require(user != address(0), "Invalid request ID");
 
         if (validationSuccess == 1) {
-            uint256 tokenId = _generateTokenId(user);
-            try stampContract.mint(user, tokenId) {
+            try stampContract.safeMint(user) {
                 // Minting successful
             } catch Error(string memory reason) {
                 // Log the error or handle it appropriately
-                emit MintingFailed(user, tokenId, reason);
+                emit MintingFailed(user, reason);
             } catch (bytes memory /*lowLevelData*/) {
                 // Log the error or handle it appropriately
-                emit MintingFailed(user, tokenId, "Unknown error");
+                emit MintingFailed(user, "Unknown error");
             }
         }
-    }
 
-    function _generateTokenId(address user) internal view returns (uint256) {
-        return uint256(keccak256(abi.encodePacked(user, block.timestamp)));
+        // Clear the request
+        delete requestIdToUser[_requestId];
     }
 
     function getOracle() public view returns (address) {
