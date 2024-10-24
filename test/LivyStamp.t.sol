@@ -23,6 +23,7 @@ contract LivyStampTest is Test {
         livyStamp = new LivyStamp(
             "LivyStamp",
             "LIVY",
+            "ipfs://example",
             defaultAdmin,
             pauser,
             minter
@@ -55,7 +56,7 @@ contract LivyStampTest is Test {
 
     function testSafeMint() public {
         vm.prank(minter);
-        livyStamp.safeMint(user, "ipfs://example");
+        livyStamp.safeMint(user);
         assertEq(livyStamp.balanceOf(user), 1);
         assertEq(livyStamp.tokenURI(0), "ipfs://example");
     }
@@ -72,7 +73,7 @@ contract LivyStampTest is Test {
 
     function testFailMintUnauthorized() public {
         vm.prank(user);
-        livyStamp.safeMint(user, "ipfs://example");
+        livyStamp.safeMint(user);
     }
 
     function testFailMintWhenPaused() public {
@@ -80,7 +81,7 @@ contract LivyStampTest is Test {
         livyStamp.pause();
 
         vm.prank(minter);
-        livyStamp.safeMint(user, "ipfs://example");
+        livyStamp.safeMint(user);
     }
 
     function testSupportsInterface() public view {

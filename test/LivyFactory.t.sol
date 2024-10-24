@@ -16,7 +16,11 @@ contract LivyFactoryTest is Test {
 
     function testCreateLivyStampCollection() public {
         vm.prank(user);
-        livyFactory.createLivyStampCollection("TestCollection", "TEST");
+        livyFactory.createLivyStampCollection(
+            "TestCollection",
+            "TEST",
+            "ipfs://example"
+        );
 
         address[] memory collections = livyFactory.getAllCollections();
         assertEq(collections.length, 1);
@@ -40,8 +44,16 @@ contract LivyFactoryTest is Test {
 
     function testGetAllCollections() public {
         vm.startPrank(user);
-        livyFactory.createLivyStampCollection("Collection1", "COL1");
-        livyFactory.createLivyStampCollection("Collection2", "COL2");
+        livyFactory.createLivyStampCollection(
+            "Collection1",
+            "COL1",
+            "ipfs://example"
+        );
+        livyFactory.createLivyStampCollection(
+            "Collection2",
+            "COL2",
+            "ipfs://example"
+        );
         vm.stopPrank();
 
         address[] memory collections = livyFactory.getAllCollections();
@@ -60,7 +72,11 @@ contract LivyFactoryTest is Test {
         vm.expectEmit(true, true, false, true);
         emit LivyFactory.CollectionCreated(expectedAddress, user);
 
-        livyFactory.createLivyStampCollection("EventTest", "EVT");
+        livyFactory.createLivyStampCollection(
+            "EventTest",
+            "EVT",
+            "ipfs://example"
+        );
 
         address[] memory collections = livyFactory.getAllCollections();
         assertEq(collections.length, 1);
@@ -72,7 +88,8 @@ contract LivyFactoryTest is Test {
             vm.prank(user);
             livyFactory.createLivyStampCollection(
                 string(abi.encodePacked("Collection", vm.toString(i))),
-                string(abi.encodePacked("COL", vm.toString(i)))
+                string(abi.encodePacked("COL", vm.toString(i))),
+                "ipfs://example"
             );
         }
 
